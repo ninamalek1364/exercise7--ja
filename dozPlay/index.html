@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://code.jquery.com/color/jquery.color-2.2.0.min.js"
+            integrity="sha256-aSe2ZC5QeunlL/w/7PsVKmV+fa0eDbmybn/ptsKHR6I="
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .box {
+            width: 150px;
+            height: 150px;
+            border: 1px solid rgb(239, 239, 244);
+            border-radius: 10px;
+            display: inline-block;
+            margin: 3px;
+            cursor: pointer;box-shadow: 0 2px 4px;
+        }
+        .playground {
+            text-align: center;
+        }
+        .player {
+            border: 1px solid gray;
+            background-color: rgb(206, 203, 203);
+            padding: 4px 4px;
+            margin: 20px;
+            width: 15%;
+            text-align: center;
+            box-shadow: 0 2px 4px;
+        }
+    </style>
+    <body>
+        <div class="player">player: <span id="player">1</span></div>
+
+        <div class="playground">
+            <div class="box" data-id="0">0</div>
+            <div class="box" data-id="1">1</div>
+            <div class="box" data-id="2">2</div>
+            <br />
+            <div class="box" data-id="3">3</div>
+            <div class="box" data-id="4">4</div>
+            <div class="box" data-id="5">5</div>
+            <br />
+            <div class="box" data-id="6">6</div>
+            <div class="box" data-id="7">7</div>
+            <div class="box" data-id="8">8</div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                let playboard = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+                let player = 1;
+                $("#player").html(player);
+                $(".box").click(function () {
+                    let id = $(this).attr("data-id");
+                    console.log(id);
+                    let placeValue = playboard[id];
+                    if (placeValue == 0) {
+                        playboard[id] = player;
+                        if (player == 1) player = 2;
+                        else player = 1;
+                    } else alert("its full");
+
+                    console.log(playboard);
+                    $("#player").html(player);
+                    if (
+                        (player[0] == 1 && player[1] == 1 && player[2] == 1) ||
+                        (player[3] == 1 && player[4] == 1 && player[5] == 1) ||
+                        (player[6] == 1 && player[7] == 1 && player[8] == 1) ||
+                        (player[0] == 1 && player[3] == 1 && player[6] == 1) ||
+                        (player[1] == 1 && player[4] == 1 && player[7] == 1) ||
+                        (player[2] == 1 && player[5] == 1 && player[8] == 1)
+                    ) {
+                        alert("player 1 win");
+                    }
+                    if (
+                        (player[0] == 2 && player[1] == 2 && player[2] == 2) ||
+                        (player[3] == 2 && player[4] == 2 && player[5] == 2) ||
+                        (player[6] == 2 && player[7] == 2 && player[8] == 2) ||
+                        (player[0] == 2 && player[3] == 2 && player[6] == 2) ||
+                        (player[2] == 2 && player[4] == 2 && player[7] == 2) ||
+                        (player[2] == 2 && player[5] == 2 && player[8] == 2)
+                    ) {
+                        alert("player 2 win");
+                    }
+                    fill();
+                });
+                function fill() {
+                    playboard.forEach(function (item, index) {
+                        if (item == 1) $(`[data-id='${index}']`).css("background-color", "red");
+                        else if (item == 2) $(`[data-id='${index}']`).css("background-color", "blue");
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
